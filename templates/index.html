@@ -1,0 +1,352 @@
+
+
+<!-- <!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Hệ thống Hỗ trợ Lái xe Thông minh</title>
+  <style>
+    /* Các style đẹp đã dùng */
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e0eafc, #cfdef3);
+      padding: 40px;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 36px;
+      margin-bottom: 30px;
+      color: #1a237e;
+      text-shadow: 1px 1px 2px #aaa;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 18px;
+      background-color: #1e88e5;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #1565c0;
+      transform: translateY(-2px);
+    }
+
+    .section {
+      display: none;
+      background-color: #ffffffee;
+      padding: 30px;
+      margin: 0 auto;
+      width: 90%;
+      max-width: 900px;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      font-size: 26px;
+      color: #0d47a1;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    #video-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    #video-feed {
+      width: 100%;
+      max-width: 700px;
+      border-radius: 10px;
+      border: 4px solid #1e88e5;
+    }
+
+    #warning-text {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🚘 Hệ thống Hỗ trợ Lái xe Thông minh</h1>
+
+  <div class="button-container">
+    <button onclick="showSection('driver')">👤 Giám sát tài xế</button>
+    <button onclick="showSection('sign')">🚧 Cảnh báo biển báo</button>
+    <button onclick="showSection('traffic')">🚗 Lưu lượng giao thông</button>
+  </div>
+
+  <div id="driver" class="section">
+    <h2>👤 Giám sát tài xế</h2>
+    <p>Hệ thống sử dụng camera để giám sát tình trạng buồn ngủ, ngáp, không thắt dây an toàn, sử dụng điện thoại...</p>
+    <div id="video-container">
+      <img id="video-feed" src="{{ url_for('video_feed') }}" alt="Camera giám sát">
+      <div id="warning-text">Đang tải cảnh báo...</div>
+    </div>
+  </div>
+
+  <div id="sign" class="section">
+    <h2>🚧 Cảnh báo biển báo giao thông</h2>
+    <p>Nhận diện biển báo như tốc độ, cấm rẽ... từ hình ảnh phía trước xe để cảnh báo kịp thời.</p>
+  </div>
+
+  <div id="traffic" class="section">
+    <h2>🚗 Phân tích lưu lượng giao thông</h2>
+    <p>Phân tích số lượng xe cộ trên một đoạn đường để cảnh báo kẹt xe, đông đúc...</p>
+  </div>
+
+  <script>
+    function showSection(sectionId) {
+      const sections = document.querySelectorAll('.section');
+      sections.forEach(sec => sec.style.display = 'none');
+      document.getElementById(sectionId).style.display = 'block';
+    }
+
+
+    // Cập nhật cảnh báo mỗi 1 giây
+   let warningInterval = null;
+
+    function startMonitoring() {
+      const video = document.getElementById("video-feed");
+      video.src = "/video_feed";
+      video.style.display = "block";
+
+      if (!warningInterval) {
+        warningInterval = setInterval(() => {
+          fetch('/get_warning')
+            .then(response => response.text())
+            .then(data => {
+              document.getElementById("warning").innerText = data || "Không có cảnh báo";
+            });
+        }, 1000);
+      }
+    }
+
+    function stopMonitoring() {
+      const video = document.getElementById("video-feed");
+      video.src = "";
+      video.style.display = "none";
+
+      document.getElementById("warning").innerText = "Đã dừng giám sát";
+
+      if (warningInterval) {
+        clearInterval(warningInterval);
+        warningInterval = null;
+      }
+    }
+  </script>
+
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hệ thống Hỗ trợ Lái xe Thông minh</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #e0eafc, #cfdef3);
+            padding: 40px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: #1a237e;
+            text-shadow: 1px 1px 2px #aaa;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #1e88e5;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #1565c0;
+            transform: translateY(-2px);
+        }
+
+        .section {
+            display: none;
+            background-color: #ffffffee;
+            padding: 30px;
+            margin: 0 auto;
+            width: 90%;
+            max-width: 900px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 26px;
+            color: #0d47a1;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        #video-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #video-feed {
+            width: 100%;
+            max-width: 700px;
+            border-radius: 10px;
+            border: 4px solid #1e88e5;
+            display: none;
+        }
+
+        #warning-text {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: red;
+            display: none;
+        }
+
+        #stop-button {
+            margin-top: 20px;
+            background-color: #e53935;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🚘 Hệ thống Hỗ trợ Lái xe Thông minh</h1>
+
+    <div class="button-container">
+        <button onclick="showSection('driver')">👤 Giám sát tài xế</button>
+        <button onclick="showSection('sign')">🚧 Cảnh báo biển báo</button>
+        <button onclick="showSection('traffic')">🚗 Lưu lượng giao thông</button>
+    </div>
+
+    <div id="driver" class="section">
+        <h2>👤 Giám sát tài xế</h2>
+        <p>Hệ thống sử dụng camera để giám sát tình trạng buồn ngủ, ngáp, không thắt dây an toàn, sử dụng điện thoại...
+        </p>
+        <div id="video-container">
+            <img id="video-feed" src="" alt="Camera giám sát">
+            <div id="warning-text">Không có cảnh báo</div>
+            <button id="stop-button" onclick="stopMonitoring()">⛔ Dừng giám sát</button>
+        </div>
+    </div>
+
+    <div id="sign" class="section">
+        <h2>🚧 Cảnh báo biển báo giao thông</h2>
+        <p>Nhận diện biển báo như tốc độ, cấm rẽ... từ hình ảnh phía trước xe để cảnh báo kịp thời.</p>
+    </div>
+
+    <div id="traffic" class="section">
+        <h2>🚗 Phân tích lưu lượng giao thông</h2>
+        <p>Phân tích số lượng xe cộ trên một đoạn đường để cảnh báo kẹt xe, đông đúc...</p>
+    </div>
+
+    <script>
+        let warningInterval = null;
+
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(sec => sec.style.display = 'none');
+            const section = document.getElementById(sectionId);
+            section.style.display = 'block';
+
+            if (sectionId === 'driver') {
+                startMonitoring();
+            } else {
+                stopMonitoring();
+            }
+        }
+
+        function startMonitoring() {
+            const video = document.getElementById("video-feed");
+            const warningText = document.getElementById("warning-text");
+
+            video.src = "/video_feed";
+            video.style.display = "block";
+            warningText.style.display = "block";
+
+            if (!warningInterval) {
+                warningInterval = setInterval(() => {
+                    fetch('/get_warning')
+                        .then(response => response.text())
+                        .then(data => {
+                            warningText.innerText = data || "Không có cảnh báo";
+                        });
+                }, 1000);
+            }
+        }
+
+        function stopMonitoring() {
+            document.getElementById("driver").style.display = "none";
+            const video = document.getElementById("video-feed");
+            const warningText = document.getElementById("warning-text");
+
+            fetch('/stop_camera');
+
+            video.src = "";
+            video.style.display = "none";
+            warningText.innerText = "";
+            warningText.style.display = "none";
+
+            if (warningInterval) {
+                clearInterval(warningInterval);
+                warningInterval = null;
+            }
+        }
+
+       Btn.style.display = "inline-block";
+
+    </script>
+
+</body>
+
+</html>
