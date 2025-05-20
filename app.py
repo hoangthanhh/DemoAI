@@ -6,6 +6,7 @@ import pygame
 import time
 from ultralytics import YOLO
 import threading
+import os
 
 app = Flask(__name__)
 
@@ -217,4 +218,5 @@ def get_warning():
 
 if __name__ == '__main__':
     # app.run(debug=True)
-    app.run(debug=False, host="0.0.0.0", port=8000)
+    port = int(os.environ.get("PORT", 8000))
+    app.run(debug=False, host="0.0.0.0", port=port)
